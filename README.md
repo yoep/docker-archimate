@@ -6,4 +6,4 @@ Archimate Docker image for building reports in CI pipelines that run in the clou
 
 Create an HTML report for the current cloned model repository.
     
-    ./Archi -application com.archimatetool.commandline.app -consoleLog -nosplash --modelrepository.loadModel . --html.createReport ./html
+    /opt/Archi/Archi -application com.archimatetool.commandline.app -consoleLog -nosplash --modelrepository.loadModel . --html.createReport ./html
