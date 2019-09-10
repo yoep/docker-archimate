@@ -1,6 +1,11 @@
 # Archimate Docker Image
 
 Archimate Docker image for building reports in CI pipelines that run in the cloud such as Bitbucket Pipelines.
+This image contains the Collaboration plugin for importing version controlled managed models.
+
+## Enabled plugins
+
+- coArchi – Model Collaboration for Archi
 
 ## Example
 
