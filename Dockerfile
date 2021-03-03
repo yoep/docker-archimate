@@ -1,14 +1,23 @@
 FROM debian:buster-slim
 
-# Install dependencies and download/extract Archi
-RUN apt-get update && apt-get install -y wget unzip gtk2.0 libgtk2.0-dev xvfb && apt-get clean && \
- wget "https://www.archimatetool.com/downloads/4.5.1/Archi-Linux64-4.5.1.tgz" && tar xvzf "Archi-Linux64-4.5.1.tgz" -C /opt/ && rm "Archi-Linux64-4.5.1.tgz" && \
- chmod +x /opt/Archi/Archi
+ENV ARCHI_VERSION=4.8.1
+ENV COARCHI_VERSION=0.7.1.202102021056
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y wget gtk2.0 libgtk2.0-dev xvfb && \
+    apt-get clean
+
+# Download & extract Archimate tool
+RUN wget --post-data="dl=Archi-Linux64-${ARCHI_VERSION}.tgz" -o "Archi-Linux64-${ARCHI_VERSION}.tgz" "https://www.archimatetool.com/downloads/archi/" && \
+    tar zxvf "index.html" -C /opt/ && \
+    rm "Archi-Linux64-${ARCHI_VERSION}.tgz" && rm "index.html" && \
+    chmod +x /opt/Archi/Archi
 
 # Install Collaboration plugin
-RUN wget "https://www.archimatetool.com/downloads/plugins/org.archicontribs.modelrepository_0.5.2.201907081356.zip" && \
- mkdir -p ~/.archi4/dropins && unzip "org.archicontribs.modelrepository_0.5.2.201907081356.zip" -d ~/.archi4/dropins && \
- rm "org.archicontribs.modelrepository_0.5.2.201907081356.zip"
+RUN wget "https://www.archimatetool.com/downloads/coarchi/org.archicontribs.modelrepository_${COARCHI_VERSION}.archiplugin" && \
+    mkdir -p ~/.archi4/dropins && \
+    mv -v "org.archicontribs.modelrepository_${COARCHI_VERSION}.archiplugin" ~/.archi4/dropins/
 
 # Start virtual display screen
 ENV DISPLAY :1
