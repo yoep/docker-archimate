@@ -1,7 +1,7 @@
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 
-ENV ARCHI_VERSION=4.8.1
-ENV COARCHI_VERSION=0.7.1.202102021056
+ENV ARCHI_VERSION=4.9.1
+ENV COARCHI_VERSION=0.8.0.202110121448
 
 # Install dependencies
 RUN apt-get update && \
@@ -9,16 +9,16 @@ RUN apt-get update && \
     apt-get clean
 
 # Download & extract Archimate tool
-RUN wget --post-data="dl=Archi-Linux64-${ARCHI_VERSION}.tgz" -o "Archi-Linux64-${ARCHI_VERSION}.tgz" "https://www.archimatetool.com/downloads/archi/" && \
+RUN wget --post-data="do=${ARCHI_VERSION}%2FArchi-Linux64-${ARCHI_VERSION}.tgz" -o "Archi-Linux64-${ARCHI_VERSION}.tgz" "https://www.archimatetool.com/downloads/archi/" && \
     tar zxvf "index.html" -C /opt/ && \
     rm "Archi-Linux64-${ARCHI_VERSION}.tgz" && rm "index.html" && \
     chmod +x /opt/Archi/Archi
 
 # Install Collaboration plugin
-RUN wget "https://www.archimatetool.com/downloads/coarchi/org.archicontribs.modelrepository_${COARCHI_VERSION}.archiplugin" && \
+RUN wget "https://www.archimatetool.com/downloads/coarchi1/coArchi_${COARCHI_VERSION}.archiplugin" && \
     mkdir -p ~/.archi4/dropins && \
-    unzip "org.archicontribs.modelrepository_${COARCHI_VERSION}.archiplugin" -d ~/.archi4/dropins && \
-    rm "org.archicontribs.modelrepository_${COARCHI_VERSION}.archiplugin"
+    unzip "coArchi_${COARCHI_VERSION}.archiplugin" -d ~/.archi4/dropins && \
+    rm "coArchi_${COARCHI_VERSION}.archiplugin"
 
 # Start virtual display screen
 ENV DISPLAY :1
